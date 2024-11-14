@@ -1,5 +1,4 @@
 import { useForm } from "react-hook-form";
-import Header from "../components/Header";
 
 type FormValues = {
   name: string;
@@ -21,10 +20,9 @@ export default function SignIn() {
 
   return (
     <>
-      <Header />
       <div className="absolute inset-x-0 mt-16 flex items-center justify-center z-50">
         <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
-          <h2 className="my-5 text-2xl font-bold">Log in</h2>
+          <h2 className="my-5 text-2xl font-bold">Sign in</h2>
           <form noValidate onSubmit={handleSubmit(onSubmit)}>
             <div className="relative mb-8">
               <input
