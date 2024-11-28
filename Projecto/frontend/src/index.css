@@ -76,6 +76,11 @@ textarea:not([rows]) {
   scroll-margin-block: 5ex;
 }
 
-input {
-  @apply p-2 border border-gray-300 rounded block
-}
+
+
+
+
+/* .active {
+  color: gold;
+  text-decoration: underline;
+} */

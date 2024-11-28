@@ -1,9 +1,8 @@
 import { useState } from "react"
 import { FaBars } from "react-icons/fa"
 
-import Logo from "./Logo"
-import UserGreet from "./UserGreet";
 import Nav from "./Nav";
+import Sidebar from "./Sidebar";
 
 function Header () {
 
@@ -13,13 +12,18 @@ function Header () {
   }
 
   return (
-    <header className="bg-slate-950 text-white py-4">
-      <div className="container mx-auto flex items-center ">
+    <header className="bg-black text-white py-4">
+      <div className="container px-2 sm:px-0 mx-auto flex items-center gap-4">
+          
         <div className="hidden sm:block">
-        <Nav />
+          <Nav />
         </div>
+
+        { isOpenSidebar && <Sidebar toggle={toggleSidebar}/>}
         <button onClick={toggleSidebar} className="sm:hidden"><FaBars size={30}/></button>
+        
       </div>
+      
     </header>
   )
 }

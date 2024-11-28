@@ -4,14 +4,15 @@ import AppRoutes from "./components/Routes"
 function App() {
   return (
     <>
-      <Header />
+      <div className="flex flex-col min-h-screen">
+        <Header />
       
-      <main className="grow prose container mx-auto py-8">
+        <main className="container mx-auto py-24">
 
-        <AppRoutes />
+          <AppRoutes />
 
-      </main>
-    
+        </main>
+      </div>
     </>
   )
 }

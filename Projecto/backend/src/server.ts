@@ -2,8 +2,6 @@ import 'dotenv/config';
 
 import express, { NextFunction, Request, Response } from 'express';
 import cors from 'cors';
-import { User ,  Role} from './config/types';
-import HttpError from './models/HttpError';
 
 import errorHandler from './middlewares/errorHandler';
 import proyectRouter from './routes/proyects.routes';

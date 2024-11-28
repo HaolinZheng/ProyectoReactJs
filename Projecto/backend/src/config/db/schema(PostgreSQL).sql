@@ -26,7 +26,7 @@ CREATE TABLE users (
     name VARCHAR(50) NOT NULL,
     email VARCHAR(50) NOT NULL,
     password VARCHAR(1000) NOT NULL,
-    role role_type NOT NULL,
+    role role_type NOT NULL DEFAULT 'member',
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     modified_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
@@ -69,8 +69,8 @@ CREATE TABLE tasks (
     title VARCHAR(50) NOT NULL,
     description VARCHAR(255) NOT NULL,
     assigned_to INT NOT NULL,
-    priority priority_type NOT NULL,
-    status status_type NOT NULL,
+    priority priority_type NOT NULL DEFAULT 'low',
+    status status_type NOT NULL DEFAULT 'pending',
     due_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     modified_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -82,7 +82,7 @@ CREATE TABLE tasks (
 CREATE TABLE activity_log (
     user_id INT NOT NULL,
     task_id INT NOT NULL,
-    activity activity_type not null default 'created',
+    activity activity_type NOT NULL DEFAULT 'created',
     timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (user_id, task_id),
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE on update CASCADE,

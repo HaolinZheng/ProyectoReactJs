@@ -33,16 +33,16 @@ export default function SignIn() {
                     message: "Mínimo 3 caracteres",
                   },
                   maxLength: {
-                    value: 10,
-                    message: "Máximo 10 caracteres",
+                    value: 20,
+                    message: "Máximo 20 caracteres",
                   },
                 })}
-                className="input"
+                className="input p-1"
                 type="text"
                 placeholder="Nombre..."
               />
               {errors.name && (
-                <span className="absolute text-red-600 text-sm mt-1">
+                <span className="absolute text-red-600 text-sm ml-4">
                   {errors.name.message}
                 </span>
               )}
@@ -52,21 +52,17 @@ export default function SignIn() {
               <input
                 {...register("email", {
                   required: "Email requerido",
-                  minLength: {
-                    value: 3,
-                    message: "Mínimo 3 caracteres",
-                  },
                   pattern: {
                     value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
                     message: "Email no válido",
                   },
                 })}
-                className="input"
+                className="input p-1"
                 type="email"
                 placeholder="Email..."
               />
               {errors.email && (
-                <span className="absolute text-red-600 text-sm mt-1">
+                <span className="absolute text-red-600 text-sm ml-4">
                   {errors.email.message}
                 </span>
               )}
@@ -77,27 +73,25 @@ export default function SignIn() {
                 {...register("password", {
                   required: "Password requerido",
                   minLength: {
-                    value: 3,
-                    message: "Mínimo 3 caracteres",
+                    value: 8,
+                    message: "Mínimo 8 caracteres",
                   },
                   maxLength: {
                     value: 16,
                     message: "Máximo 16 caracteres",
                   },
                 })}
-                className="input"
+                className="input p-1"
                 type="password"
                 placeholder="Contraseña..."
               />
               {errors.password && (
-                <span className="absolute text-red-600 text-sm mt-1">
+                <span className="absolute text-red-600 text-sm ml-4">
                   {errors.password.message}
                 </span>
               )}
             </div>
-            <button
-              className="ml-1 "
-            >
+            <button className="ml-1">
               Enviar
             </button>
           </form>
