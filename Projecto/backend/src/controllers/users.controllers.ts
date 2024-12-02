@@ -1,8 +1,9 @@
 import { Request, RequestHandler, Response } from 'express';
-import db from '../db/connection.js';
-import { users } from '../db/schema.js';
-import HttpError from '../models/HttpError.js';
-import ValidationError from '../models/ValidationError.js';
+import db from '../db/connection.ts';
+import { users } from '../db/schema.ts';
+import HttpError from '../schemas/HttpError.ts';
+import ValidationError from '../schemas/ValidationError.ts';
+import { eq } from 'drizzle-orm';
 import {
   AddUserSchema,
   IdSchema,
@@ -14,7 +15,6 @@ async function getAllUsers(req: Request, res: Response) {
   const allUsers = await db
     .select()
     .from(users);
-
   res.send(allUsers);
 }
 
@@ -26,9 +26,10 @@ async function getOneUser(req: Request, res: Response) {
   if (!success) {
     throw new ValidationError(error);
   }
-  const [user] = await db
+  const user = await db
     .select()
-    .from(users);
+    .from(users)
+    .where(eq(users.id, id));
 
   if (!user) {
     throw new HttpError(404, `User with ID ${id} not found`);
@@ -38,14 +39,30 @@ async function getOneUser(req: Request, res: Response) {
 }
 
 async function addOneUser(req: Request, res: Response) {
+  console.log('llego');
+  console.log(req.body);
   const user = req.body;
 
   // Validamos usuario
-  const { success, data, error } = AddUserSchema.safeParse(user);
+  const { success, data: newUser, error } = AddUserSchema.safeParse(user);
 
   if (!success) {
     throw new ValidationError(error);
   }
+
+  const saltNumber = 10;
+  const encriptedPassword = await bcrypt.hash(
+    newUser.password,
+    saltNumber
+  );
+
+  newUser.password = encriptedPassword
+
+  const [userDB] = await db.insert(users).values(newUser).returning({
+    name: users.name,
+  });
+
+  res.status(201).send(userDB);
 }
 
 export { getAllUsers, getOneUser, addOneUser };

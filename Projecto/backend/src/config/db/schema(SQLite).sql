@@ -7,7 +7,6 @@ CREATE TABLE users (
     name TEXT NOT NULL,
     email TEXT NOT NULL,
     password TEXT NOT NULL,
-    role TEXT CHECK(role IN ('admin', 'member')) NOT NULL,
     created_at DATETIME not null default CURRENT_TIMESTAMP,
     modified_at DATETIME not null default CURRENT_TIMESTAMP
 );
@@ -27,6 +26,7 @@ DROP TABLE IF EXISTS usersjointeams;
 CREATE TABLE usersjointeams (
     user_id INT NOT NULL,
     team_id INT NOT NULL,
+    role TEXT CHECK(role IN ('admin', 'member')) NOT NULL,
     PRIMARY KEY (user_id, team_id),
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (team_id) REFERENCES teams(id) ON DELETE CASCADE

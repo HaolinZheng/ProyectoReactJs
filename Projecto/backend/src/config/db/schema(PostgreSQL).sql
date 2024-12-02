@@ -26,7 +26,6 @@ CREATE TABLE users (
     name VARCHAR(50) NOT NULL,
     email VARCHAR(50) NOT NULL,
     password VARCHAR(1000) NOT NULL,
-    role role_type NOT NULL DEFAULT 'member',
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     modified_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
@@ -44,6 +43,7 @@ CREATE TABLE teams (
 CREATE TABLE usersjointeams (
     user_id INT NOT NULL,
     team_id INT NOT NULL,
+    role role_type NOT NULL DEFAULT 'member',
     PRIMARY KEY (user_id, team_id),
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE on update CASCADE,
     FOREIGN KEY (team_id) REFERENCES teams(id) ON DELETE CASCADE on update CASCADE

@@ -1,30 +1,25 @@
 import axios from 'axios';
+import { User, UserForm } from '../config/types';
 
 const axiosInstance = axios.create({
-  baseURL: '/4321',
+  baseURL: 'http://localhost:4321',
   timeout: 5000,
-  headers: {
-    'Content-Type': 'application/json',
-    'Authorization': "Basic " + btoa('admin@elpuig.xeill.net' + ":" + '2444')
-  },
+  // withCredentials: true,
+//  headers: {
+//    'Content-Type': 'application/json',
+//    'Authorization': "Bearer " //!+ ACCESS_TOKEN
+//  },
 });
 
-export const getUser = () => {
-  axiosInstance.get('/users')
-    .then(resp => {
-      return resp
-    })
-    .catch(error => {
-      return error
-    })
+export const getUser = async () => {
+  return await axiosInstance.get<User[]>("/users");
 };
 
-export const getUserById = (id: number) => {
-  axiosInstance.get(`/users/${id}`)
-    .then(resp => {
-      return resp
-    })
-    .catch(error => {
-      return error
-    })
+export const getUserById = async (id: number) => {
+  return await axiosInstance.get<User>(`/users/${id}`);
+};
+
+export const postUser = async (data: UserForm) => {
+  console.log(data)
+  return await axiosInstance.post("/", data);
 };

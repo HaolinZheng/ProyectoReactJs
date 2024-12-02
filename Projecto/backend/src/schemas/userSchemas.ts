@@ -20,7 +20,7 @@ const AddUserSchema = z.object({
     .min(1, 'Password required')
     .min(8, 'Min 8 characters')
     .max(16, 'Max 16 characters'),
-  role: z.enum(['host', 'guest']),
+  role: z.enum(['admin', 'member']),
 });
 
 const LoginSchema = AddUserSchema.pick({

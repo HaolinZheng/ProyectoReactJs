@@ -1,21 +1,17 @@
 import { useForm } from "react-hook-form";
-
-type FormValues = {
-  name: string;
-  email: string;
-  password: string;
-};
+import { postUser } from "../service/axios";
+import { UserForm } from "../config/types";
 
 export default function SignIn() {
 
-  const { register, handleSubmit, formState } = useForm<FormValues>({
+  const { register, handleSubmit, formState } = useForm<UserForm>({
     mode: "onChange",
   });
 
   const { errors } = formState;
 
-  function onSubmit(data: FormValues) {
-    console.log(data);
+  function onSubmit(data: UserForm) {
+    postUser(data);
   }
 
   return (
