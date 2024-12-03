@@ -30,36 +30,24 @@ CREATE TABLE users (
     modified_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
--- Teams
-CREATE TABLE teams (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
-    password VARCHAR(1000) NOT NULL,
-    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
-    modified_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-);
-
--- Users inner join Teams
-CREATE TABLE usersjointeams (
-    user_id INT NOT NULL,
-    team_id INT NOT NULL,
-    role role_type NOT NULL DEFAULT 'member',
-    PRIMARY KEY (user_id, team_id),
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE on update CASCADE,
-    FOREIGN KEY (team_id) REFERENCES teams(id) ON DELETE CASCADE on update CASCADE
-);
-
 -- Projects
 CREATE TABLE projects (
     id SERIAL PRIMARY KEY,
-    team_id INT NOT NULL,
     name VARCHAR(50) NOT NULL,
     description VARCHAR(255) NOT NULL,
     start_and_created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     end_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    modified_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (team_id) REFERENCES teams(id) ON DELETE CASCADE on update CASCADE
+    modified_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
 
+-- Users inner join Projects
+CREATE TABLE usersjoinprojects (
+    user_id INT NOT NULL,
+    projects_id INT NOT NULL,
+    role role_type NOT NULL DEFAULT 'member',
+    PRIMARY KEY (user_id, projects_id),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE on update CASCADE,
+    FOREIGN KEY (projects_id) REFERENCES projects(id) ON DELETE CASCADE on update CASCADE
 );
 
 -- Tasks
