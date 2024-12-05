@@ -12,7 +12,13 @@ function Sidebar({ toggle }: SidebarProps) {
       <button onClick={toggle} className="absolute top-2 end-2">
         <IoClose size="35"/>
       </button>
-      <Nav className="text-2xl" vertical/>
+      <nav className="text-2xl" vertical>
+          <NavLink to="/">Home</NavLink>
+          <NavLink to="/projects">Projects</NavLink>
+          {!vertical && <div className="w-96"></div>}
+          <NavLink to="/login">Log In</NavLink>
+          <NavLink to="/signin">Sign In</NavLink>
+        </nav>
     </div>
   )
 }

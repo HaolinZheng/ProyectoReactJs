@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { postUser } from "../service/axios";
+import { signin } from "../service/axios";
 import { UserForm } from "../config/types";
 
 export default function SignIn() {
@@ -11,7 +11,7 @@ export default function SignIn() {
   const { errors } = formState;
 
   function onSubmit(data: UserForm) {
-    postUser(data);
+    signin(data);
   }
 
   return (

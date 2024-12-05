@@ -1,21 +1,38 @@
 import { useForm } from "react-hook-form";
-
-type FormValues = {
-  name: string;
-  password: string;
-};
+import { login } from "../service/axios";
+import { UserForm } from "../config/types";
+import { useNavigate } from "react-router-dom";
 
 export default function SignIn() {
 
-  const { register, handleSubmit, formState } = useForm<FormValues>({
+  const { register, handleSubmit, formState } = useForm<UserForm>({
     mode: "onChange",
   });
 
   const { errors } = formState;
+  const navigate = useNavigate()
 
-  function onSubmit(data: FormValues) {
-    console.log(data);
+  async function onSubmit(data: UserForm) {
+    try {
+      const resp = await login(data); // Se asume que 'login' devuelve una respuesta de tipo fetch/axios
+      const responseData = await resp.data;
+
+      if (responseData) {
+        localStorage.setItem("User Id", String(responseData.id));
+        localStorage.setItem("User Name", responseData.name);
+        localStorage.setItem("User Email", responseData.email);
+        alert("Inicio de sesión exitoso");
+        navigate('/');
+        // Aquí puedes redirigir o actualizar el estado de la aplicación
+      } else {
+        alert("Inicio de sesión fallido. Verifica tus credenciales.");
+      }
+    } catch (error) {
+      console.error("Error durante el inicio de sesión:", error);
+      alert("Ocurrió un error. Por favor, intenta nuevamente.");
+    }
   }
+
 
   return (
     <>
@@ -26,7 +43,7 @@ export default function SignIn() {
             <div className="relative mb-8">
               <input
                 {...register("name", {
-                  required: "Nombre requerido",
+                  required: "Nombre/Email requerido",
                   minLength: {
                     value: 3,
                     message: "Mínimo 3 caracteres",
@@ -38,7 +55,7 @@ export default function SignIn() {
                 })}
                 className="input p-1"
                 type="text"
-                placeholder="Nombre..."
+                placeholder="Nombre/Email..."
               />
               {errors.name && (
                 <span className="absolute text-red-600 text-sm ml-4">

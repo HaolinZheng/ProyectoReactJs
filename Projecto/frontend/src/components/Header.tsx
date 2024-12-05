@@ -1,29 +1,30 @@
-import { useState } from "react"
-import { FaBars } from "react-icons/fa"
+import { NavLink } from "react-router-dom";
 
-import Nav from "./Nav";
-import Sidebar from "./Sidebar";
+interface NavProps {
+  className?: string;
+  vertical?: boolean;
+}
 
-function Header () {
+function Header(props: NavProps) {
 
-  const [isOpenSidebar, setIsOpenSidebar] = useState(false)
-  function toggleSidebar() {
-    setIsOpenSidebar(!isOpenSidebar);
-  }
+  const { className, vertical } = props;
+
+  const classes = `flex gap-4 ${className} ${vertical ? 'flex-col items-center' : ''}`
 
   return (
     <header className="bg-black text-white py-4">
       <div className="container px-2 sm:px-0 mx-auto flex items-center gap-4">
-          
-        <div className="hidden sm:block">
-          <Nav />
-        </div>
 
-        { isOpenSidebar && <Sidebar toggle={toggleSidebar}/>}
-        <button onClick={toggleSidebar} className="sm:hidden"><FaBars size={30}/></button>
-        
+        <nav className={classes}>
+          <NavLink to="/">Home</NavLink>
+          <NavLink to="/projects">Projects</NavLink>
+          {!vertical && <div className="w-96"></div>}
+          <NavLink to="/login">Log In</NavLink>
+          <NavLink to="/signin">Sign In</NavLink>
+        </nav>
+
       </div>
-      
+
     </header>
   )
 }

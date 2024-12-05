@@ -20,12 +20,19 @@ const AddUserSchema = z.object({
     .min(1, 'Password required')
     .min(8, 'Min 8 characters')
     .max(16, 'Max 16 characters'),
-  role: z.enum(['admin', 'member']),
 });
 
-const LoginSchema = AddUserSchema.pick({
-  email: true,
-  password: true,
+const LoginSchema = z.object({
+  name: z
+    .string()
+    .min(1, 'Name required')
+    .min(3, 'Min 3 characters')
+    .max(20, 'Max 20 characters'),
+  password: z
+    .string()
+    .min(1, 'Password required')
+    .min(8, 'Min 8 characters')
+    .max(16, 'Max 16 characters'),
 });
 
 export { IdSchema, AddUserSchema, LoginSchema };

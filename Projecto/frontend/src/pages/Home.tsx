@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getUser } from "../service/axios"; // Ajusta la ruta según sea necesario
-import { AxiosResponse } from "axios";
 import { User } from "../config/types";
+import List from "../components/List";
 
 
 
@@ -33,11 +33,7 @@ export default function Home() {
   return (
     <>
       <h1>Lista de Usuarios</h1>
-      <ul>
-        {users.map((user) => (
-          <li key={user.id}>{user.name}</li>
-        ))}
-      </ul>
+      <List items={users}/>
     </>
   );
 }
