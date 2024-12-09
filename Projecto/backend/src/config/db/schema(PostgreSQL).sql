@@ -33,7 +33,7 @@ CREATE TABLE users (
 CREATE TABLE projects (
     id SERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
-    description VARCHAR(255) NOT NULL,
+    description VARCHAR(255),
     start_and_created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     end_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     modified_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -54,8 +54,8 @@ CREATE TABLE tasks (
     id SERIAL PRIMARY KEY,
     project_id INT NOT NULL,
     title VARCHAR(50) NOT NULL,
-    description VARCHAR(255) NOT NULL,
-    assigned_to INT NOT NULL,
+    description VARCHAR(255),
+    assigned_to INT,
     priority priority_type NOT NULL DEFAULT 'low',
     status status_type NOT NULL DEFAULT 'pending',
     due_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
