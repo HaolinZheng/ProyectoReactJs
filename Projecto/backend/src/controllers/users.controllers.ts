@@ -57,6 +57,7 @@ async function addOneUser(req: Request, res: Response) {
 }
 
 async function login(req: Request, res: Response) {
+  
   const {
     success,
     data: loginUser,
@@ -84,6 +85,8 @@ async function login(req: Request, res: Response) {
     );
     if (isPasswordCorrect) {
       userLocation = i;
+      console.log('Usuario encontrado');
+      
       break
     }
   }
@@ -101,18 +104,19 @@ async function login(req: Request, res: Response) {
     email: userDB[userLocation].email,
   };
 
-  const token = jwt.sign(userToSend, process.env.SECRET_KEY!, { expiresIn: '1d'});
+  const token = jwt.sign(userToSend, process.env.SECRET_KEY!, { });
 
   res.cookie('access_token', token, {
     httpOnly: true,
-    maxAge: 60 * 60 * 24,
     sameSite: 'none',
     secure: true,
   });
 
+  res.send(userToSend)
+
 }
 
-async function signin(req: Request, res: Response) {
+async function signup(req: Request, res: Response) {
   const {
     success,
     data: signinUser,
@@ -125,7 +129,9 @@ async function signin(req: Request, res: Response) {
 
   const userDB = await userModel.getUserByEmail(signinUser.email);
 
-  if (!userDB) {
+  console.log(userDB);
+  
+  if (userDB) {
     throw new HttpError(404, 'Ese correo ya tiene una cuenta');
   }
 
@@ -148,15 +154,15 @@ async function signin(req: Request, res: Response) {
     email: newUser.email,
   };
 
-  const token = jwt.sign(userToSend, process.env.SECRET_KEY!, { expiresIn: '1d'});
+  const token = jwt.sign(userToSend, process.env.SECRET_KEY!, { });
 
   res.cookie('access_token', token, {
     httpOnly: true,
-    maxAge: 60 * 60 * 24,
     sameSite: 'none',
-    secure: true,
+    secure: true,    
   });
 
+res.send(userToSend)
 }
 
-export { getAllUsers, getOneUser, addOneUser , login , signin };
+export { getAllUsers, getOneUser, addOneUser , login , signup };

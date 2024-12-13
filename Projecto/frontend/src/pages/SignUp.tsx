@@ -1,8 +1,9 @@
 import { useForm } from "react-hook-form";
-import { signin } from "../service/axios";
+import { signup } from "../config/axios";
 import { UserForm } from "../config/types";
+import { AxiosError } from "axios";
 
-export default function SignIn() {
+export default function SignUp() {
 
   const { register, handleSubmit, formState } = useForm<UserForm>({
     mode: "onChange",
@@ -10,15 +11,22 @@ export default function SignIn() {
 
   const { errors } = formState;
 
-  function onSubmit(data: UserForm) {
-    signin(data);
+  async function onSubmit(data: UserForm) {
+    try {
+      await signup(data);
+      alert('Registrado correctamente')
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        console.log(error.response?.data)
+      }
+    }
   }
 
   return (
     <>
       <div className="absolute inset-x-0 mt-16 flex items-center justify-center z-50">
         <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
-          <h2 className="my-5 text-2xl font-bold">Sign in</h2>
+          <h2 className="my-5 text-2xl font-bold">Sign Up</h2>
           <form noValidate onSubmit={handleSubmit(onSubmit)}>
             <div className="relative mb-8">
               <input

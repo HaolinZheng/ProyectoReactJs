@@ -1,11 +1,18 @@
 import { Request, Response } from 'express';
 
-async function haveCookie(req: Request, res: Response) {
-
-  if(req.cookies.access_token !== null) {
-    res.send(true);
-  }
-  else res.send(false);
+async function isLoged(req: Request, res: Response) {  
+  const token = req.cookies.access_token;
+  token ? res.send(true) : res.send(false);
 }
 
-export { haveCookie };
+async function logOut(req: Request, res: Response) {  
+  res.clearCookie('access_token', {
+    httpOnly: true,
+    sameSite: 'none',
+    secure: true,
+  });
+
+  res.send({ message: 'User is not logged' });
+}
+
+export { isLoged, logOut };

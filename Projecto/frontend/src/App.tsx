@@ -1,18 +1,21 @@
 import Header from "./components/Header"
 import AppRoutes from "./components/Routes"
+import { AuthProvider } from "./contexts/AuthProvider"
 
 function App() {
   return (
     <>
-      <div className="flex flex-col min-h-screen">
-        <Header />
-      
-        <main className="container mx-auto py-24">
+      <AuthProvider>
+        <div className="flex flex-col min-h-screen">
+          <Header />
 
-          <AppRoutes />
+          <main className="container mx-auto py-24">
 
-        </main>
-      </div>
+            <AppRoutes />
+
+          </main>
+        </div>
+      </AuthProvider>
     </>
   )
 }

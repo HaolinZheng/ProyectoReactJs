@@ -1,15 +1,20 @@
 import 'dotenv/config';
+import 'express-async-errors';
 
 import express, { NextFunction, Request, Response } from 'express';
 import cors from 'cors';
+import morgan from 'morgan';
 
 import errorHandler from './middlewares/errorHandler';
-import proyectRouter from './routes/users.routes';
-import { haveCookie } from './controllers/log.controllers';
-
+import userRouter from './routes/users.routes';
+import { isLoged , logOut} from './controllers/log.controllers';
+import proyectRouter from './routes/proyect.routes';
+import cookieParser from 'cookie-parser';
 
 const app = express();
 
+app.use(cookieParser());
+app.use(morgan('dev'));
 app.use(express.json());
 app.use(
   cors({
@@ -17,8 +22,11 @@ app.use(
     credentials: true,
   })
 );
-app.use('/users', proyectRouter);
-app.use('/cookiesearch', haveCookie);
+
+app.use('/users', userRouter);
+app.use('/proyects', proyectRouter);
+app.use('/isloged', isLoged);
+app.use('/logout', logOut);
 
 app.use(errorHandler);
 

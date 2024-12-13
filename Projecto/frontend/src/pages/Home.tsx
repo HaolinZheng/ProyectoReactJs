@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getUser } from "../service/axios"; // Ajusta la ruta según sea necesario
+import { getUser } from "../config/axios"; // Ajusta la ruta según sea necesario
 import { User } from "../config/types";
 import List from "../components/List";
 
@@ -33,7 +33,6 @@ export default function Home() {
   return (
     <>
       <h1>Lista de Usuarios</h1>
-      <List items={users}/>
     </>
   );
 }

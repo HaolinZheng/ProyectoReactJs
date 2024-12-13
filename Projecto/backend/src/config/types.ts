@@ -7,13 +7,13 @@ type User = {
   modified_at?: Date;
 };
 
-
-type Team = {
-  id: number;
+interface Project {
+  id?: number;
   name: string;
-  password: string;
-  created_at: Date;
-  modified_at: Date;
+  description?: string;
+  start_and_created_at?: Date;
+  end_at?: Date;
+  modified_at?: Date;
 };
 
-export type { User };
+export type { User , Project };

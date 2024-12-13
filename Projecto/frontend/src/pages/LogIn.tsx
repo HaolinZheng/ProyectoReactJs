@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { login } from "../service/axios";
+import { login } from "../config/axios";
 import { UserForm } from "../config/types";
 import { useNavigate } from "react-router-dom";
 
@@ -15,21 +15,22 @@ export default function SignIn() {
   async function onSubmit(data: UserForm) {
     try {
       const resp = await login(data); // Se asume que 'login' devuelve una respuesta de tipo fetch/axios
-      const responseData = await resp.data;
-
-      if (responseData) {
-        localStorage.setItem("User Id", String(responseData.id));
-        localStorage.setItem("User Name", responseData.name);
-        localStorage.setItem("User Email", responseData.email);
+      
+      if (resp.data) {
         alert("Inicio de sesión exitoso");
         navigate('/');
-        // Aquí puedes redirigir o actualizar el estado de la aplicación
       } else {
         alert("Inicio de sesión fallido. Verifica tus credenciales.");
       }
     } catch (error) {
-      console.error("Error durante el inicio de sesión:", error);
-      alert("Ocurrió un error. Por favor, intenta nuevamente.");
+      console.log('Axios error', error);
+      alert('Usuario/Email o Contraseña equivocada')
+      // if (error instanceof AxiosError) {
+      //   console.log(error.response?.data)
+
+      // }
+      // console.error("Error durante el inicio de sesión:", error);
+      // alert("Ocurrió un error. Por favor, intenta nuevamente.");
     }
   }
 
